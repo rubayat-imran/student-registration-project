@@ -1,7 +1,7 @@
 import StudentsModel from "../model/StudentModel.js";
-import mongoose from "mongoose";
-const multer = require('multer');
-const path = require('path');
+import { TokenEncode } from "../utility/tokenUtility.js";
+import path from 'path';
+import fs from 'fs';
 
 // Register student
 export const Registration = async (req, res) => {
@@ -9,14 +9,13 @@ export const Registration = async (req, res) => {
         let reqBody = req.body;
         const { email } = reqBody;
 
-        const studentExists = await Student.findOne({ email });
-        if (studentExists) return res.status(400).json({ status: "success", message: 'Student already exists' });
+        const studentExists = await StudentsModel.findOne({ email });
+        if (studentExists) return res.status(400).json({ status: "fail", message: 'Student already exists' });
 
-        await StudentsModel.create(reqBody)
-        return res.json({ status: "success", "Message": "Student registered successfully" })
-    }
-    catch (e) {
-        return res.json({ status: "fail", "Message": e.toString() })
+        await StudentsModel.create(reqBody);
+        return res.json({ status: "success", message: "Student registered successfully" });
+    } catch (e) {
+        return res.status(500).json({ status: "fail", message: e.toString() });
     }
 };
 
@@ -31,7 +30,7 @@ export const Login = async (req, res) => {
         }
         else {
             // Login Success
-            let token = TokenEncode(data['email'], data['_id'])
+            let token = TokenEncode(data['email'], data['_id']);
             return res.json({ status: "success", "Message": "User login successfully", data: { token: token } })
         }
     }
@@ -41,7 +40,7 @@ export const Login = async (req, res) => {
 }
 
 // Read Profile
-export const ProfileRead = async (req, res) => {
+export const ProfileDetails = async (req, res) => {
     try {
         let user_id = req.headers['user_id']
         let data = await StudentsModel.findOne({ "_id": user_id })
@@ -56,7 +55,7 @@ export const ProfileRead = async (req, res) => {
 export const ProfileUpdate = async (req, res) => {
     try {
         let reqBody = req.body;
-        let user_id = req.headers['user_id']
+        let user_id = req.headers['user_id'];
         await StudentsModel.updateOne({ "_id": user_id }, reqBody)
         return res.json({ status: "success", "Message": "User Update successfully" })
     }
@@ -65,36 +64,32 @@ export const ProfileUpdate = async (req, res) => {
     }
 }
 
-// Configure multer for file uploads
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, './uploads');
-    },
-    filename: (req, file, cb) => {
-        cb(null, `${Date.now()}-${file.originalname}`);
-    },
-});
-
-const upload = multer({ storage });
 
 // File upload API
-const uploadFile = (req, res) => {
-    res.json({ message: 'File uploaded successfully', file: req.file });
+export const uploadFile = (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ status: "fail", message: "No file uploaded" });
+    }
+    return res.json({ status: "success", message: 'File uploaded successfully', file: req.file });
 };
 
 // File read API
-const readFile = (req, res) => {
-    const filePath = path.join(__dirname, `../uploads/${req.params.filename}`);
-    res.sendFile(filePath);
+export const readFile = (req, res) => {
+    const filePath = path.join(process.cwd(), 'uploads', req.params.filename); // Use process.cwd() for correct directory
+
+    res.sendFile(filePath, (err) => {
+        if (err) {
+            console.error("File not found or error sending file:", err);
+            return res.status(404).json({ status: "fail", message: "File not found" });
+        }
+    });
 };
 
 // File delete API
-const deleteFile = (req, res) => {
-    const filePath = path.join(__dirname, `../uploads/${req.params.filename}`);
+export const deleteFile = (req, res) => {
+    const filePath = path.join(process.cwd(), 'uploads', req.params.filename);
     fs.unlink(filePath, (err) => {
         if (err) return res.status(500).json({ message: 'File deletion failed' });
         res.json({ message: 'File deleted successfully' });
     });
 };
-
-module.exports = { uploadFile, readFile, deleteFile };
