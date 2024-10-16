@@ -1,2 +1,3 @@
 # student-registration-project
-version: 1.00
+
+Submitted - Rubayat Imran

@@ -1,0 +1,234 @@
+{
+	"info": {
+		"_postman_id": "338aaacb-0129-4f33-810b-81791738e5ca",
+		"name": "Student Registration",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37687000"
+	},
+	"item": [
+		{
+			"name": "Registration",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"email\":\"testing@test.com\",\r\n        \"firstName\":\"testing\",\r\n        \"lastName\":\"test\",\r\n        \"password\":\"abc123\",\r\n        \"status\":\"new\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/register",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"email\":\"testing@test.com\",\r\n        \"password\":\"abc123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/Login",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"Login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ProfileDetails",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{BASE_URL}}/profile",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ProfileUpdate",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"email\": \"testing@test.com\",\r\n        \"firstName\": \"testing\",\r\n        \"lastName\": \"test\",\r\n        \"password\": \"ab123\",\r\n        \"otp\": \"1\",\r\n        \"status\": \"Update\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/update",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FileUpload",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRhc21pbkB0ZXN0LmNvbSIsInVzZXJfaWQiOiI2NzBlYTY1NDc4Mzc5MmFkOGExNTA0NTciLCJpYXQiOjE3MjkwMTQ3ODAsImV4cCI6MTczMTYwNjc4MH0.6WmcAnVvXmgu9q091SrzL7GdWOgKyCGAR4U8MN2DSTk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "postman-cloud:///1ef8bb31-353c-4a80-a594-5726d85f5dfa"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/upload",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FileRead",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRhc21pbkB0ZXN0LmNvbSIsInVzZXJfaWQiOiI2NzBlYTY1NDc4Mzc5MmFkOGExNTA0NTciLCJpYXQiOjE3MjkwMTQ3ODAsImV4cCI6MTczMTYwNjc4MH0.6WmcAnVvXmgu9q091SrzL7GdWOgKyCGAR4U8MN2DSTk",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{BASE_URL}}/readfile/testing.txt",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"readfile",
+						"testing.txt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FileDelete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRhc21pbkB0ZXN0LmNvbSIsInVzZXJfaWQiOiI2NzBlYTY1NDc4Mzc5MmFkOGExNTA0NTciLCJpYXQiOjE3MjkwMTQ3ODAsImV4cCI6MTczMTYwNjc4MH0.6WmcAnVvXmgu9q091SrzL7GdWOgKyCGAR4U8MN2DSTk",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{BASE_URL}}/deletefile/testing.txt",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"deletefile",
+						"testing.txt"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://localhost:5050/api/students",
+			"type": "string"
+		},
+		{
+			"key": "TOKEN",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRhc21pbkB0ZXN0LmNvbSIsInVzZXJfaWQiOiI2NzBlYTY1NDc4Mzc5MmFkOGExNTA0NTciLCJpYXQiOjE3MjkwMTQyNzIsImV4cCI6MTczMTYwNjI3Mn0.CKJn4Pz7-3oYwjES1bK7fzoEie_2XIwk07cUBAWCEfc",
+			"type": "string"
+		}
+	]
+}
